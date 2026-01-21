@@ -131,9 +131,9 @@
     
     <script>
         // Script simple para cuenta regresiva
-        const fechaBoda = new Date("{{ boda.fecha_iso }}").getTime();
+        const fechaBoda = new Date("{{ boda.fecha_iso }}");
         const x = setInterval(function() {
-            const now = new Date().getTime();
+            const now = new Date();
             const distance = fechaBoda - now;
             
             if (distance < 0) {
@@ -142,12 +142,26 @@
                 return;
             }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            // Cálculo de meses, días, horas, minutos
+            let months = (fechaBoda.getFullYear() - now.getFullYear()) * 12 + (fechaBoda.getMonth() - now.getMonth());
+            
+            let tempDate = new Date(now);
+            tempDate.setMonth(now.getMonth() + months);
+            
+            if (tempDate > fechaBoda) {
+                months--;
+                tempDate = new Date(now);
+                tempDate.setMonth(now.getMonth() + months);
+            }
+            
+            const remaining = fechaBoda - tempDate;
+            const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
             
             document.getElementById("countdown").innerHTML = 
-                `<div class="time-box"><span>${days}</span> Días</div>
+                `<div class="time-box"><span>${months}</span> Meses</div>
+                 <div class="time-box"><span>${days}</span> Días</div>
                  <div class="time-box"><span>${hours}</span> Hs</div>
                  <div class="time-box"><span>${minutes}</span> Min</div>`;
         }, 1000);
