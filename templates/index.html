@@ -3,51 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boda de {{ boda.novios }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <title>{{ boda.novios }} - Nuestra Boda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <header class="hero">
-        <div class="overlay">
-            <p class="intro">¡Nos casamos!</p>
-            <h1>{{ boda.novios }}</h1>
-            <p class="date">{{ boda.fecha_texto }}</p>
+    <!-- Hero Section -->
+    <header class="hero" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ boda.fotos.portada }}');">
+        <div class="hero-content">
+            <p class="intro">¡Nos Casamos!</p>
+            <h1 class="nombres">{{ boda.novios }}</h1>
+            <div class="fecha-badge">
+                <span class="dia">{{ boda.fecha_dia }}</span>
+                <span class="mes">{{ boda.fecha_mes }}</span>
+                <span class="anio">{{ boda.fecha_anio }}</span>
+            </div>
+            <p class="lugar">{{ boda.lugar }}</p>
         </div>
     </header>
 
-    <section class="details">
-        <div class="container">
-            <h2>Detalles del Evento</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <h3>Ceremonia y Recepción</h3>
-                    <p><strong>Lugar:</strong> {{ boda.lugar }}</p>
-                    <p>{{ boda.direccion }}</p>
-                    <p><strong>Hora:</strong> {{ boda.hora }}</p>
-                </div>
-                <div class="info-item">
-                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Detalle Boda" class="detail-img">
-                </div>
+    <!-- Invitado Section -->
+    <section class="invitacion container">
+        <p class="frase">"{{ boda.frase }}"</p>
+        <div class="pase-info">
+            <p>Apreciable: <strong>{{ invitado }}</strong></p>
+            <p>Hemos reservado: <span class="badge">{{ pases }}</span> para ti.</p>
+        </div>
+        <div class="padres">
+            <div class="col">
+                <h3>Padres de la Novia</h3>
+                {% for padre in boda.padres_novia %}
+                <p>{{ padre }}</p>
+                {% endfor %}
+            </div>
+            <div class="col">
+                <h3>Padres del Novio</h3>
+                {% for padre in boda.padres_novio %}
+                <p>{{ padre }}</p>
+                {% endfor %}
             </div>
         </div>
     </section>
 
+    <!-- Cuenta Regresiva -->
     <section class="countdown-section">
-        <h2>Cuenta Regresiva</h2>
-        <div id="countdown" data-date="{{ boda.fecha_iso }}">
-            <div class="time-box"><span id="days">00</span>Días</div>
-            <div class="time-box"><span id="hours">00</span>Horas</div>
-            <div class="time-box"><span id="minutes">00</span>Min</div>
-            <div class="time-box"><span id="seconds">00</span>Seg</div>
+        <h2>Faltan</h2>
+        <div id="countdown" data-date="{{ boda.fecha_iso }}"></div>
+    </section>
+
+    <!-- Itinerario -->
+    <section class="itinerario container">
+        <h2>Itinerario</h2>
+        <div class="timeline">
+            {% for evento in boda.itinerario %}
+            <div class="evento">
+                <div class="icono"><i class="{{ evento.icono }}"></i></div>
+                <div class="detalle">
+                    <h3>{{ evento.hora }}</h3>
+                    <p>{{ evento.actividad }}</p>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </section>
 
+    <!-- Ubicación -->
+    <section class="ubicacion">
+        <h2>Ubicación</h2>
+        <p>{{ boda.lugar }}</p>
+        <p>{{ boda.direccion }}</p>
+        <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver en Mapa</a>
+    </section>
+
+    <!-- Regalos y Dress Code -->
+    <section class="detalles container">
+        <div class="card">
+            <i class="fas fa-gift"></i>
+            <h3>Regalos</h3>
+            <p>{{ boda.regalos.tipo }}</p>
+            <p class="small">{{ boda.regalos.frase }}</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-tshirt"></i>
+            <h3>Código de Vestimenta</h3>
+            <p>{{ boda.dress_code }}</p>
+        </div>
+    </section>
+
+    <!-- Galería -->
+    <section class="galeria">
+        {% for foto in boda.fotos.galeria %}
+        <img src="{{ foto }}" alt="Foto Boda">
+        {% endfor %}
+    </section>
+
     <footer>
-        <p>Esperamos contar con tu presencia.</p>
-        <button class="rsvp-btn" onclick="alert('¡Gracias! Pronto te contactaremos.')">Confirmar Asistencia</button>
+        <p>Te esperamos para celebrar juntos.</p>
+        <p>{{ boda.novios }}</p>
     </footer>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Script simple para cuenta regresiva
+        const fechaBoda = new Date("{{ boda.fecha_iso }}").getTime();
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = fechaBoda - now;
+            
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "¡Es hoy!";
+                clearInterval(x);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById("countdown").innerHTML = 
+                `<div class="time-box"><span>${days}</span> Días</div>
+                 <div class="time-box"><span>${hours}</span> Hs</div>
+                 <div class="time-box"><span>${minutes}</span> Min</div>`;
+        }, 1000);
+    </script>
 </body>
 </html>
