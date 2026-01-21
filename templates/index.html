@@ -8,7 +8,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
+<body class="locked">
+    <!-- Sobre / Envelope Overlay -->
+    <div id="envelope-overlay">
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="paper">
+                    <div class="paper-content">
+                        <p class="paper-text">Invitación para</p>
+                        <h2 class="paper-name">{{ invitado }}</h2>
+                        <p class="paper-text">{{ pases }}</p>
+                    </div>
+                </div>
+                <div class="pocket"></div>
+                <div class="flap"></div>
+                <div class="seal" onclick="abrirSobre()">
+                    <span>L&C</span>
+                </div>
+            </div>
+            <div id="action-area" class="hidden">
+                <button class="btn-enter" onclick="entrar()">Ver Invitación</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Principal (Oculto inicialmente) -->
+    <div id="main-content" class="hidden-content">
     <!-- Hero Section -->
     <header class="hero" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ boda.fotos.portada }}');">
         <div class="hero-content">
@@ -26,24 +51,6 @@
     <!-- Invitado Section -->
     <section class="invitacion container">
         <p class="frase">"{{ boda.frase }}"</p>
-        <div class="pase-info">
-            <p>Apreciable: <strong>{{ invitado }}</strong></p>
-            <p>Hemos reservado: <span class="badge">{{ pases }}</span> para ti.</p>
-        </div>
-        <div class="padres">
-            <div class="col">
-                <h3>Padres de la Novia</h3>
-                {% for padre in boda.padres_novia %}
-                <p>{{ padre }}</p>
-                {% endfor %}
-            </div>
-            <div class="col">
-                <h3>Padres del Novio</h3>
-                {% for padre in boda.padres_novio %}
-                <p>{{ padre }}</p>
-                {% endfor %}
-            </div>
-        </div>
     </section>
 
     <!-- Cuenta Regresiva -->
@@ -86,7 +93,7 @@
         </div>
         <div class="card">
             <i class="fas fa-tshirt"></i>
-            <h3>Código de Vestimenta</h3>
+            <h3>Dress code</h3>
             <p>{{ boda.dress_code }}</p>
         </div>
     </section>
@@ -102,6 +109,7 @@
         <p>Te esperamos para celebrar juntos.</p>
         <p>{{ boda.novios }}</p>
     </footer>
+    </div>
 
     <script>
         // Script simple para cuenta regresiva
@@ -125,6 +133,35 @@
                  <div class="time-box"><span>${hours}</span> Hs</div>
                  <div class="time-box"><span>${minutes}</span> Min</div>`;
         }, 1000);
+
+        // Script para abrir el sobre
+        function abrirSobre() {
+            const envelope = document.getElementById('envelope');
+            const actionArea = document.getElementById('action-area');
+            
+            envelope.classList.add('open');
+            
+            // Mostrar botón después de la animación del sobre
+            setTimeout(() => {
+                actionArea.classList.remove('hidden');
+                actionArea.classList.add('fade-in');
+            }, 800);
+        }
+
+        function entrar() {
+            const overlay = document.getElementById('envelope-overlay');
+            const mainContent = document.getElementById('main-content');
+            const body = document.body;
+
+            overlay.classList.add('slide-up-out');
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                mainContent.classList.remove('hidden-content');
+                mainContent.classList.add('fade-in-page');
+                body.classList.remove('locked');
+            }, 1000);
+        }
     </script>
 </body>
 </html>
