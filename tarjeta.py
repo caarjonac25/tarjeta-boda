@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import os
 
 app = Flask(__name__)
@@ -7,15 +7,45 @@ app = Flask(__name__)
 DATOS_BODA = {
     "novios": "Laura & Carlos",
     "fecha_texto": "Domingo, 28 de Junio de 2026",
+    "fecha_dia": "28",
+    "fecha_mes": "JUN",
+    "fecha_anio": "2026",
     "hora": "4:00 pm",
     "lugar": "La Ruitoca, Bucaramanga",
-    "direccion": "Av. Siempre Viva 123, Ciudad de México",
-    "fecha_iso": "2026-06-28T16:00:00"
+    "direccion": "Km 2 Vía Ruitoque, Bucaramanga, Santander",
+    "ubicacion_url": "https://www.google.com/maps/search/?api=1&query=La+Ruitoca+Bucaramanga",
+    "fecha_iso": "2026-06-28T16:00:00",
+    "frase": "El amor es paciente, es bondadoso. El amor no es envidioso ni jactancioso ni orgulloso. No se comporta con rudeza, no es egoísta, no se enoja fácilmente, no guarda rencor.",
+    "padres_novia": ["María González", "José Pérez"],
+    "padres_novio": ["Carmen Rodríguez", "Luis Hernández"],
+    "padrinos": ["Sofía Martínez", "David López"],
+    "itinerario": [
+        {"hora": "4:00 PM", "actividad": "Ceremonia Religiosa", "icono": "fas fa-church"},
+        {"hora": "5:30 PM", "actividad": "Cóctel de Bienvenida", "icono": "fas fa-glass-cheers"},
+        {"hora": "6:30 PM", "actividad": "Recepción y Cena", "icono": "fas fa-utensils"},
+        {"hora": "8:00 PM", "actividad": "Fiesta", "icono": "fas fa-music"},
+    ],
+    "regalos": {
+        "frase": "Tu presencia es nuestro mejor regalo, pero si deseas tener un detalle con nosotros, agradecemos tu aporte en sobre.",
+        "tipo": "Lluvia de Sobres"
+    },
+    "dress_code": "Formal / Guayabera",
+    "fotos": {
+        "portada": "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+        "galeria": [
+            "https://images.unsplash.com/photo-1511285560982-1356c11d4606?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1520854221256-17451cc330e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        ]
+    }
 }
 
 @app.route('/')
 def home():
-    return render_template('index.html', boda=DATOS_BODA)
+    # Capturar parámetros de la URL (ej: ?n=2 pases&m=Familia Perez)
+    pases = request.args.get('n', '1 pase')
+    invitado = request.args.get('m', 'Invitado Especial')
+    return render_template('index.html', boda=DATOS_BODA, pases=pases, invitado=invitado)
 
 if __name__ == '__main__':
     # Configuración para Render (usa la variable de entorno PORT)
