@@ -14,6 +14,9 @@ DATOS_BODA = {
     "lugar": "La Ruitoca, Bucaramanga",
     "direccion": "Km 2 Vía Ruitoque, Bucaramanga, Santander",
     "ubicacion_url": "https://www.google.com/maps/search/?api=1&query=La+Ruitoca+Bucaramanga",
+    "ceremonia_lugar": "Capilla San José",
+    "ceremonia_direccion": "Seminario Mayor Arquidiocesano",
+    "ceremonia_url": "https://www.google.com/maps/place/Capilla+San+Jos%C3%A9+-+Seminario+Mayor+Arquidiocesano/@7.059459,-73.0809005,17z/data=!3m1!4b1!4m6!3m5!1s0x8e68409f7a4a7513:0x19ebdf17fb23a74a!8m2!3d7.0594537!4d-73.0783202!16s%2Fg%2F11c6ddsbmc?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D",
     "fecha_iso": "2026-06-28T16:00:00",
     "frase": "El amor es paciente, es bondadoso. El amor no es envidioso ni jactancioso ni orgulloso. No se comporta con rudeza, no es egoísta, no se enoja fácilmente, no guarda rencor.",
     "itinerario": [
@@ -26,6 +29,7 @@ DATOS_BODA = {
         "frase": "Tu presencia es nuestro mejor regalo, pero si deseas tener un detalle con nosotros, agradecemos tu aporte en sobre.",
         "tipo": "Lluvia de Sobres"
     },
+    "musica": "music/luna_de_miel.mp3",
     "dress_code": "Formal / Casual",
     "fotos": {
         "portada": "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",

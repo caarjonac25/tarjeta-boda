@@ -78,9 +78,18 @@
     <!-- Ubicación -->
     <section class="ubicacion">
         <h2>Ubicación</h2>
-        <p>{{ boda.lugar }}</p>
-        <p>{{ boda.direccion }}</p>
-        <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver en Mapa</a>
+        <div style="margin-bottom: 40px;">
+            <h3><i class="fas fa-church" style="color: #d4af37;"></i> Ceremonia</h3>
+            <p>{{ boda.ceremonia_lugar }}</p>
+            <p>{{ boda.ceremonia_direccion }}</p>
+            <a href="{{ boda.ceremonia_url }}" target="_blank" class="btn">Ver en Mapa</a>
+        </div>
+        <div>
+            <h3><i class="fas fa-glass-cheers" style="color: #d4af37;"></i> Recepción</h3>
+            <p>{{ boda.lugar }}</p>
+            <p>{{ boda.direccion }}</p>
+            <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver en Mapa</a>
+        </div>
     </section>
 
     <!-- Regalos y Dress Code -->
@@ -111,6 +120,13 @@
     </footer>
     </div>
 
+    {% if boda.musica %}
+    <!-- Audio de fondo -->
+    <audio id="musica-boda">
+        <source src="{{ url_for('static', filename=boda.musica) }}" type="audio/mpeg">
+    </audio>
+    {% endif %}
+    
     <script>
         // Script simple para cuenta regresiva
         const fechaBoda = new Date("{{ boda.fecha_iso }}").getTime();
@@ -138,9 +154,29 @@
         function abrirSobre() {
             const envelope = document.getElementById('envelope');
             const actionArea = document.getElementById('action-area');
+            const audio = document.getElementById('musica-boda');
             
             envelope.classList.add('open');
             
+            // Lógica de reproducción de música
+            if (audio) {
+                audio.currentTime = 20; // Empezar en el segundo 20
+                audio.volume = 1.0;
+                audio.play().catch(e => console.log("Reproducción automática bloqueada por el navegador", e));
+
+                // Detener después de 1 minuto (60000 ms) con efecto fade-out
+                setTimeout(() => {
+                    const fadeAudio = setInterval(() => {
+                        if (audio.volume > 0.05) {
+                            audio.volume -= 0.05;
+                        } else {
+                            audio.pause();
+                            clearInterval(fadeAudio);
+                        }
+                    }, 200); // Baja el volumen cada 200ms
+                }, 60000);
+            }
+
             // Mostrar botón después de la animación del sobre
             setTimeout(() => {
                 actionArea.classList.remove('hidden');
