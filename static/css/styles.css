@@ -225,6 +225,15 @@ h1, h2, h3 {
 
 /* Ubicacion */
 .ubicacion { padding: 60px 20px; background: #fff; }
+.ubicacion-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+}
+.ubicacion-item {
+    flex: 1 1 300px;
+}
 .btn {
     display: inline-block;
     padding: 10px 20px;

@@ -78,17 +78,19 @@
     <!-- Ubicación -->
     <section class="ubicacion">
         <h2>Ubicación</h2>
-        <div style="margin-bottom: 40px;">
-            <h3><i class="fas fa-church" style="color: #d4af37;"></i> Ceremonia</h3>
-            <p>{{ boda.ceremonia_lugar }}</p>
-            <p>{{ boda.ceremonia_direccion }}</p>
-            <a href="{{ boda.ceremonia_url }}" target="_blank" class="btn">Ver en Mapa</a>
-        </div>
-        <div>
-            <h3><i class="fas fa-glass-cheers" style="color: #d4af37;"></i> Recepción</h3>
-            <p>{{ boda.lugar }}</p>
-            <p>{{ boda.direccion }}</p>
-            <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver en Mapa</a>
+        <div class="ubicacion-container">
+            <div class="ubicacion-item">
+                <h3><i class="fas fa-church" style="color: #d4af37;"></i> Ceremonia</h3>
+                <p>{{ boda.ceremonia_lugar }}</p>
+                <p>{{ boda.ceremonia_direccion }}</p>
+                <a href="{{ boda.ceremonia_url }}" target="_blank" class="btn">Ver en Mapa</a>
+            </div>
+            <div class="ubicacion-item">
+                <h3><i class="fas fa-glass-cheers" style="color: #d4af37;"></i> Recepción</h3>
+                <p>{{ boda.lugar }}</p>
+                <p>{{ boda.direccion }}</p>
+                <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver en Mapa</a>
+            </div>
         </div>
     </section>
 
