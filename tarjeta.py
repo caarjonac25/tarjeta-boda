@@ -5,12 +5,12 @@ app = Flask(__name__)
 
 # Datos de la boda
 DATOS_BODA = {
-    "novios": "Ana & Carlos",
-    "fecha_texto": "Sábado, 14 de Diciembre de 2024",
-    "hora": "18:00 hrs",
-    "lugar": "Hacienda El Ensueño",
+    "novios": "Laura & Carlos",
+    "fecha_texto": "Domingo, 28 de Junio de 2026",
+    "hora": "4:00 pm",
+    "lugar": "La Ruitoca, Bucaramanga",
     "direccion": "Av. Siempre Viva 123, Ciudad de México",
-    "fecha_iso": "2024-12-14T18:00:00" 
+    "fecha_iso": "2026-06-28T16:00:00"
 }
 
 @app.route('/')
