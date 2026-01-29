@@ -176,10 +176,22 @@
         function abrirSobre() {
             const envelope = document.getElementById('envelope');
             const actionArea = document.getElementById('action-area');
-            const audio = document.getElementById('musica-boda');
             
             envelope.classList.add('open');
-            
+
+            // Mostrar botón después de la animación del sobre
+            setTimeout(() => {
+                actionArea.classList.remove('hidden');
+                actionArea.classList.add('fade-in');
+            }, 800);
+        }
+
+        function entrar() {
+            const overlay = document.getElementById('envelope-overlay');
+            const mainContent = document.getElementById('main-content');
+            const body = document.body;
+            const audio = document.getElementById('musica-boda');
+
             // Lógica de reproducción de música
             if (audio) {
                 audio.currentTime = 0; // Empezar desde el inicio
@@ -198,18 +210,6 @@
                     }, 200); // Baja el volumen cada 200ms
                 }, 60000);
             }
-
-            // Mostrar botón después de la animación del sobre
-            setTimeout(() => {
-                actionArea.classList.remove('hidden');
-                actionArea.classList.add('fade-in');
-            }, 800);
-        }
-
-        function entrar() {
-            const overlay = document.getElementById('envelope-overlay');
-            const mainContent = document.getElementById('main-content');
-            const body = document.body;
 
             overlay.classList.add('slide-up-out');
             
