@@ -33,7 +33,7 @@ DATOS_BODA = {
         "frase": "Tu presencia es nuestro mejor regalo, pero si deseas tener un detalle con nosotros, agradecemos tu aporte en sobre.",
         "tipo": "Lluvia de Sobres"
     },
-    "musica": "music/cancion1.mpeg",
+    "musica": "music/cancion1.mp3",
     "dress_code": "Formal / Casual",
     "fotos": {
         "portada": "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",

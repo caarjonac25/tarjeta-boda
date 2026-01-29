@@ -144,7 +144,7 @@
     {% if boda.musica %}
     <!-- Audio de fondo -->
     <audio id="musica-boda">
-        <source src="{{ url_for('static', filename=boda.musica) }}">
+        <source src="{{ url_for('static', filename=boda.musica) }}" type="audio/mpeg">
     </audio>
     
     <!-- Controles de Música -->
