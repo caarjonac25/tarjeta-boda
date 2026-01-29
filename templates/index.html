@@ -296,6 +296,20 @@
                 body.classList.remove('locked');
             }, 1000);
         }
+
+        // Detener música al minimizar o cambiar de pestaña (funciona en Instagram/Facebook)
+        document.addEventListener("visibilitychange", () => {
+            const audio = document.getElementById('musica-boda');
+            if (document.hidden && audio) {
+                audio.pause();
+                const btn = document.getElementById('play-pause-btn');
+                if(btn) {
+                    const icon = btn.querySelector('i');
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                }
+            }
+        });
     </script>
 </body>
 </html>
