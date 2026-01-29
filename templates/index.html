@@ -125,10 +125,11 @@
     {% if boda.musica %}
     <!-- Audio de fondo -->
     <audio id="musica-boda">
-        <source src="{{ url_for('static', filename=boda.musica) }}" type="audio/mpeg">
+        <source src="{{ url_for('static', filename=boda.musica) }}">
     </audio>
     {% endif %}
     
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         // Script simple para cuenta regresiva
         const fechaBoda = new Date("{{ boda.fecha_iso }}");
@@ -139,6 +140,11 @@
             if (distance < 0) {
                 document.getElementById("countdown").innerHTML = "¡Es hoy!";
                 clearInterval(x);
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
                 return;
             }
 
@@ -176,7 +182,7 @@
             
             // Lógica de reproducción de música
             if (audio) {
-                audio.currentTime = 20; // Empezar en el segundo 20
+                audio.currentTime = 0; // Empezar desde el inicio
                 audio.volume = 1.0;
                 audio.play().catch(e => console.log("Reproducción automática bloqueada por el navegador", e));
 
