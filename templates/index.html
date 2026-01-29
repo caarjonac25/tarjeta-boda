@@ -50,7 +50,21 @@
 
     <!-- Invitado Section -->
     <section class="invitacion container">
-        <p class="frase">"{{ boda.frase }}"</p>
+        <div class="slider-container">
+            <div class="slider-track">
+                {% for frase in boda.frases %}
+                <div class="slide">
+                    <p class="frase">"{{ frase }}"</p>
+                </div>
+                {% endfor %}
+                <!-- Clonar el primero para efecto infinito -->
+                {% if boda.frases %}
+                <div class="slide">
+                    <p class="frase">"{{ boda.frases[0] }}"</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </section>
 
     <!-- Cuenta Regresiva -->
@@ -106,6 +120,11 @@
             <i class="fas fa-tshirt"></i>
             <h3>Dress code</h3>
             <p>{{ boda.dress_code }}</p>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Confirmación" class="card-img">
+            <h3>Confirmación</h3>
+            <p>Te contactaremos para confirmar tu asistencia</p>
         </div>
     </section>
 

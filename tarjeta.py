@@ -18,7 +18,11 @@ DATOS_BODA = {
     "ceremonia_direccion": "Seminario Mayor Arquidiocesano",
     "ceremonia_url": "https://www.google.com/maps/place/Capilla+San+Jos%C3%A9+-+Seminario+Mayor+Arquidiocesano/@7.059459,-73.0809005,17z/data=!3m1!4b1!4m6!3m5!1s0x8e68409f7a4a7513:0x19ebdf17fb23a74a!8m2!3d7.0594537!4d-73.0783202!16s%2Fg%2F11c6ddsbmc?entry=ttu&g_ep=EgoyMDI2MDExOS4wIKXMDSoKLDEwMDc5MjA3MUgBUAM%3D",
     "fecha_iso": "2026-06-28T16:00:00",
-    "frase": "El amor es paciente, es bondadoso. El amor no es envidioso ni jactancioso ni orgulloso. No se comporta con rudeza, no es egoísta, no se enoja fácilmente, no guarda rencor.",
+    "frases": [
+        "Amar no es mirarse el uno al otro; es mirar juntos en la misma dirección.",
+        "Te elijo hoy y todos los días, para caminar juntos, reír juntos y construir un camino lleno de sueños y amor eterno.",
+        "Andar juntos por la vida es el mejor viaje que podemos emprender."
+    ],
     "itinerario": [
         {"hora": "4:00 PM", "actividad": "Ceremonia Religiosa", "icono": "fas fa-church"},
         {"hora": "5:30 PM", "actividad": "Cóctel de Bienvenida", "icono": "fas fa-glass-cheers"},
