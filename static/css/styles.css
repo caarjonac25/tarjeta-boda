@@ -1,5 +1,5 @@
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
     margin: 0;
     padding: 0;
     color: #4a4a4a;
@@ -16,7 +16,7 @@ body.locked { overflow: hidden; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: #2c2c2c; /* Fondo oscuro elegante */
+    background: radial-gradient(circle, #444 0%, #1a1a1a 100%); /* Fondo con degradado elegante */
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -26,17 +26,17 @@ body.locked { overflow: hidden; }
 }
 
 .envelope-wrapper {
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.5s ease;
 }
 
 .envelope {
     position: relative;
     width: 320px;
     height: 220px;
-    background: #e0dcd3; /* Color interior del sobre */
+    background: #D7BDE2; /* Color interior del sobre (Lila Suave) */
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     perspective: 1000px;
 }
@@ -49,7 +49,7 @@ body.locked { overflow: hidden; }
     height: 0;
     border-style: solid;
     border-width: 0 160px 120px 160px; /* Crea el triángulo inferior */
-    border-color: transparent transparent #f9f6ee transparent; /* Color del frente del sobre */
+    border-color: transparent transparent #EBDEF0 transparent; /* Color del frente del sobre (Lila Pálido) */
     z-index: 3;
 }
 
@@ -61,7 +61,7 @@ body.locked { overflow: hidden; }
     height: 0;
     border-style: solid;
     border-width: 110px 160px 0 160px; /* Crea el triángulo superior (solapa) */
-    border-color: #ece9e1 transparent transparent transparent; /* Color de la solapa */
+    border-color: #EBDEF0 transparent transparent transparent; /* Color de la solapa */
     transform-origin: top;
     transition: transform 0.6s ease, z-index 0.1s linear 0.3s;
     z-index: 5;
@@ -86,7 +86,7 @@ body.locked { overflow: hidden; }
 }
 
 .paper-content { text-align: center; }
-.paper-name { font-family: 'Great Vibes', cursive; font-size: 2rem; color: #d4af37; margin: 5px 0; }
+.paper-name { font-family: 'Great Vibes', cursive; font-size: 2rem; color: #8E44AD; margin: 5px 0; }
 .paper-text { font-size: 0.9rem; color: #666; margin: 0; }
 
 .seal {
@@ -96,7 +96,7 @@ body.locked { overflow: hidden; }
     transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
-    background: #d4af37; /* Dorado */
+    background: #DB9EF4; /* Lila Principal */
     border-radius: 50%;
     z-index: 6;
     display: flex;
@@ -125,13 +125,24 @@ body.locked { overflow: hidden; }
     transform: translateY(-80px); /* Saca la tarjeta hacia arriba */
 }
 
+/* Escalar el sobre según el dispositivo */
+@media (max-width: 360px) {
+    .envelope-wrapper { transform: scale(0.85); }
+}
+@media (min-width: 768px) {
+    .envelope-wrapper { transform: scale(1.3); }
+}
+@media (min-width: 1200px) {
+    .envelope-wrapper { transform: scale(1.6); }
+}
+
 /* Botón de entrar */
 #action-area { margin-top: 60px; opacity: 0; transition: opacity 0.5s; }
 #action-area.fade-in { opacity: 1; }
 .hidden { display: none; }
 
 .btn-enter {
-    background: #d4af37;
+    background: #DB9EF4;
     color: white;
     border: none;
     padding: 12px 30px;
@@ -140,7 +151,7 @@ body.locked { overflow: hidden; }
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 /* Transiciones de página */
@@ -203,7 +214,7 @@ h1, h2, h3 {
 
 /* Countdown */
 .countdown-section {
-    background-color: #d4af37;
+    background-color: #DB9EF4;
     color: white;
     padding: 40px 20px;
 }
@@ -217,7 +228,7 @@ h1, h2, h3 {
 .evento { display: flex; align-items: center; gap: 20px; text-align: left; width: 100%; max-width: 400px; }
 .icono { 
     width: 50px; height: 50px; 
-    background: #d4af37; color: white; 
+    background: #DB9EF4; color: white; 
     border-radius: 50%; 
     display: flex; align-items: center; justify-content: center;
     font-size: 1.2rem;
@@ -259,7 +270,7 @@ h1, h2, h3 {
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     width: 250px;
 }
-.card i { font-size: 2rem; color: #d4af37; margin-bottom: 15px; }
+.card i { font-size: 2rem; color: #DB9EF4; margin-bottom: 15px; }
 .small { font-size: 0.9rem; color: #666; }
 
 /* Galeria */
@@ -274,6 +285,7 @@ footer {
     background: #333;
     color: white;
     padding: 40px 20px;
+    font-size: 1.3rem;
 }
 
 @media (max-width: 768px) {
@@ -282,4 +294,50 @@ footer {
 }
 @media (max-width: 480px) {
     .galeria img { width: 100%; }
+    .music-controls {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 12px;
+    }
+}
+
+/* Controles de música flotantes */
+.music-controls {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 15px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    backdrop-filter: blur(5px);
+}
+
+.music-controls button {
+    background: #DB9EF4;
+    border: none;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: transform 0.2s;
+}
+
+.music-controls button:hover {
+    transform: scale(1.1);
+}
+
+.music-controls input[type=range] {
+    width: 80px;
+    accent-color: #DB9EF4;
+    cursor: pointer;
 }

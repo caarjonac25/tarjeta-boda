@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ boda.novios }} - Nuestra Boda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
@@ -80,13 +80,13 @@
         <h2>Ubicación</h2>
         <div class="ubicacion-container">
             <div class="ubicacion-item">
-                <h3><i class="fas fa-church" style="color: #d4af37;"></i> Ceremonia</h3>
+                <h3><i class="fas fa-church" style="color: #DB9EF4;"></i> Ceremonia</h3>
                 <p>{{ boda.ceremonia_lugar }}</p>
                 <p>{{ boda.ceremonia_direccion }}</p>
                 <a href="{{ boda.ceremonia_url }}" target="_blank" class="btn">Ver en Mapa</a>
             </div>
             <div class="ubicacion-item">
-                <h3><i class="fas fa-glass-cheers" style="color: #d4af37;"></i> Recepción</h3>
+                <h3><i class="fas fa-glass-cheers" style="color: #DB9EF4;"></i> Recepción</h3>
                 <p>{{ boda.lugar }}</p>
                 <p>{{ boda.direccion }}</p>
                 <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver en Mapa</a>
@@ -127,10 +127,22 @@
     <audio id="musica-boda">
         <source src="{{ url_for('static', filename=boda.musica) }}">
     </audio>
+    
+    <!-- Controles de Música -->
+    <div id="music-controls" class="music-controls" style="display: none;">
+        <button id="play-pause-btn" onclick="toggleMusic()">
+            <i class="fas fa-pause"></i>
+        </button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" oninput="changeVolume(this.value)">
+    </div>
     {% endif %}
     
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
+        // Variables para control de música
+        let fadeTimeout;
+        let fadeInterval;
+
         // Script simple para cuenta regresiva
         const fechaBoda = new Date("{{ boda.fecha_iso }}");
         const x = setInterval(function() {
@@ -186,26 +198,71 @@
             }, 800);
         }
 
+        function toggleMusic() {
+            const audio = document.getElementById('musica-boda');
+            const btn = document.getElementById('play-pause-btn');
+            const icon = btn.querySelector('i');
+            
+            // Cancelar fade-out si el usuario interactúa manualmente
+            if(fadeTimeout) clearTimeout(fadeTimeout);
+            if(fadeInterval) clearInterval(fadeInterval);
+
+            if (audio.paused) {
+                audio.play();
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+            } else {
+                audio.pause();
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+            }
+        }
+
+        function changeVolume(vol) {
+            const audio = document.getElementById('musica-boda');
+            // Cancelar fade-out si el usuario interactúa manualmente
+            if(fadeTimeout) clearTimeout(fadeTimeout);
+            if(fadeInterval) clearInterval(fadeInterval);
+            
+            audio.volume = vol;
+        }
+
         function entrar() {
             const overlay = document.getElementById('envelope-overlay');
             const mainContent = document.getElementById('main-content');
             const body = document.body;
             const audio = document.getElementById('musica-boda');
+            const musicControls = document.getElementById('music-controls');
 
             // Lógica de reproducción de música
             if (audio) {
-                audio.currentTime = 0; // Empezar desde el inicio
+                audio.currentTime = 20; // Empezar en el segundo 20
                 audio.volume = 1.0;
                 audio.play().catch(e => console.log("Reproducción automática bloqueada por el navegador", e));
+                
+                // Mostrar controles
+                if (musicControls) {
+                    musicControls.style.display = 'flex';
+                }
 
                 // Detener después de 1 minuto (60000 ms) con efecto fade-out
-                setTimeout(() => {
-                    const fadeAudio = setInterval(() => {
+                fadeTimeout = setTimeout(() => {
+                    fadeInterval = setInterval(() => {
                         if (audio.volume > 0.05) {
                             audio.volume -= 0.05;
+                            // Actualizar slider visualmente
+                            const slider = document.getElementById('volume-slider');
+                            if(slider) slider.value = audio.volume;
                         } else {
                             audio.pause();
-                            clearInterval(fadeAudio);
+                            clearInterval(fadeInterval);
+                            // Actualizar icono a play
+                            const btn = document.getElementById('play-pause-btn');
+                            if(btn) {
+                                const icon = btn.querySelector('i');
+                                icon.classList.remove('fa-pause');
+                                icon.classList.add('fa-play');
+                            }
                         }
                     }, 200); // Baja el volumen cada 200ms
                 }, 60000);
