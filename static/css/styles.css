@@ -137,7 +137,10 @@ body.locked { overflow: hidden; }
 }
 
 /* Botón de entrar */
-#action-area { margin-top: 220px; opacity: 0; transition: opacity 0.5s; }
+#action-area { margin-top: 100px; opacity: 0; transition: opacity 0.5s; }
+@media (min-width: 768px) {
+    #action-area { margin-top: 210px; }
+}
 #action-area.fade-in { opacity: 1; }
 .hidden { display: none; }
 

@@ -181,6 +181,7 @@
                 musicControls.classList.remove('hidden');
                 
                 // Intentar reproducir música (los navegadores a veces bloquean esto sin interacción previa)
+                audio.currentTime = 20;
                 audio.play().then(() => {
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 }).catch(e => console.log("Autoplay bloqueado, usuario debe dar play manual"));
