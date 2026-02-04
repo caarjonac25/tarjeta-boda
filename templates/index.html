@@ -162,6 +162,7 @@
         const musicControls = document.getElementById('music-controls');
         const audio = document.getElementById('bg-music');
         const playBtn = document.getElementById('play-pause');
+        let isMusicPlaying = false;
 
         seal.addEventListener('click', () => {
             envelope.classList.add('open');
@@ -183,6 +184,7 @@
                 // Intentar reproducir música (los navegadores a veces bloquean esto sin interacción previa)
                 audio.currentTime = 20;
                 audio.play().then(() => {
+                    isMusicPlaying = true;
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 }).catch(e => console.log("Autoplay bloqueado, usuario debe dar play manual"));
             }, 1000);
@@ -192,10 +194,21 @@
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
+                isMusicPlaying = true;
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
             } else {
                 audio.pause();
+                isMusicPlaying = false;
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+
+        // Pausar música cuando la página no es visible
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                audio.pause();
+            } else if (isMusicPlaying) {
+                audio.play();
             }
         });
 
