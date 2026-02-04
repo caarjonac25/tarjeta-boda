@@ -4,312 +4,226 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ boda.novios }} - Nuestra Boda</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="locked">
-    <!-- Sobre / Envelope Overlay -->
+
+    <!-- Overlay del Sobre -->
     <div id="envelope-overlay">
         <div class="envelope-wrapper">
             <div class="envelope" id="envelope">
+                <div class="flap"></div>
+                <div class="pocket"></div>
                 <div class="paper">
                     <div class="paper-content">
-                        <p class="paper-text">Invitación para</p>
-                        <h2 class="paper-name">{{ invitado }}</h2>
-                        <p class="paper-text">{{ pases }}</p>
+                        <div class="paper-name">{{ invitado }}</div>
+                        <p class="paper-text">Tenemos una invitación especial para ti</p>
+                        <p class="paper-text" style="margin-top: 10px; font-size: 0.8rem;">{{ pases }}</p>
                     </div>
                 </div>
-                <div class="pocket"></div>
-                <div class="flap"></div>
-                <div class="seal" onclick="abrirSobre()">
-                    <span>L&C</span>
+                <div class="seal" id="seal">
+                    <span>{{ boda.novios[0] }}&{{ boda.novios.split('&')[1].strip()[0] }}</span>
                 </div>
             </div>
-            <div id="action-area" class="hidden">
-                <button class="btn-enter" onclick="entrar()">Ver Invitación</button>
-            </div>
+        </div>
+        
+        <div id="action-area" class="hidden">
+            <button class="btn-enter" id="enter-btn">Ingresar a la Boda</button>
         </div>
     </div>
 
     <!-- Contenido Principal (Oculto inicialmente) -->
     <div id="main-content" class="hidden-content">
-    <!-- Hero Section -->
-    <header class="hero" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{{ boda.fotos.portada }}');">
-        <div class="hero-content">
-            <p class="intro">¡Nos Casamos!</p>
-            <h1 class="nombres">{{ boda.novios }}</h1>
-            <div class="fecha-badge">
-                <span class="dia">{{ boda.fecha_dia }}</span>
-                <span class="mes">{{ boda.fecha_mes }}</span>
-                <span class="anio">{{ boda.fecha_anio }}</span>
+        <!-- Hero -->
+        <header class="hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ boda.fotos.portada }}');">
+            <div class="container">
+                <p>¡Nos Casamos!</p>
+                <h1 class="nombres">{{ boda.novios }}</h1>
+                <div class="fecha-badge">
+                    <span class="dia">{{ boda.fecha_dia }}</span>
+                    <span class="mes">{{ boda.fecha_mes }}</span>
+                    <span class="anio">{{ boda.fecha_anio }}</span>
+                </div>
+                <p>{{ boda.lugar }}</p>
             </div>
-            <p class="lugar">{{ boda.lugar }}</p>
-        </div>
-    </header>
+        </header>
 
-    <!-- Invitado Section -->
-    <section class="invitacion container">
-        <div class="slider-container">
-            <div class="slider-track">
-                {% for frase in boda.frases %}
-                <div class="slide">
-                    <p class="frase">"{{ frase }}"</p>
+        <!-- Frases Slider -->
+        <section class="invitacion">
+            <div class="slider-container">
+                <div class="slider-track">
+                    {% for frase in boda.frases %}
+                    <div class="slide">
+                        <p class="frase">"{{ frase }}"</p>
+                    </div>
+                    {% endfor %}
+                    <!-- Clon para efecto infinito -->
+                     <div class="slide">
+                        <p class="frase">"{{ boda.frases[0] }}"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cuenta Regresiva -->
+        <section class="countdown-section">
+            <h2>Faltan</h2>
+            <div id="countdown" data-date="{{ boda.fecha_iso }}">
+                <div class="time-box"><span id="days">00</span>Días</div>
+                <div class="time-box"><span id="hours">00</span>Hs</div>
+                <div class="time-box"><span id="minutes">00</span>Min</div>
+                <div class="time-box"><span id="seconds">00</span>Seg</div>
+            </div>
+        </section>
+
+        <!-- Itinerario -->
+        <section class="itinerario">
+            <h2>Itinerario</h2>
+            <div class="timeline">
+                {% for item in boda.itinerario %}
+                <div class="evento">
+                    <div class="icono"><i class="{{ item.icono }}"></i></div>
+                    <div class="info">
+                        <h3>{{ item.hora }}</h3>
+                        <p>{{ item.actividad }}</p>
+                    </div>
                 </div>
                 {% endfor %}
-                <!-- Clonar el primero para efecto infinito -->
-                {% if boda.frases %}
-                <div class="slide">
-                    <p class="frase">"{{ boda.frases[0] }}"</p>
-                </div>
-                {% endif %}
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Cuenta Regresiva -->
-    <section class="countdown-section">
-        <h2>Faltan</h2>
-        <div id="countdown" data-date="{{ boda.fecha_iso }}"></div>
-    </section>
-
-    <!-- Itinerario -->
-    <section class="itinerario container">
-        <h2>Itinerario</h2>
-        <div class="timeline">
-            {% for evento in boda.itinerario %}
-            <div class="evento">
-                <div class="icono"><i class="{{ evento.icono }}"></i></div>
-                <div class="detalle">
-                    <h3>{{ evento.hora }}</h3>
-                    <p>{{ evento.actividad }}</p>
+        <!-- Ubicación -->
+        <section class="ubicacion">
+            <h2>Ubicación</h2>
+            <div class="ubicacion-container">
+                <div class="ubicacion-item">
+                    <h3>Ceremonia</h3>
+                    <p>{{ boda.ceremonia_lugar }}</p>
+                    <p class="small">{{ boda.ceremonia_direccion }}</p>
+                    <a href="{{ boda.ceremonia_url }}" target="_blank" class="btn">Ver Mapa</a>
+                </div>
+                <div class="ubicacion-item">
+                    <h3>Recepción</h3>
+                    <p>{{ boda.lugar }}</p>
+                    <p class="small">{{ boda.direccion }}</p>
+                    <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver Mapa</a>
                 </div>
             </div>
+        </section>
+
+        <!-- Regalos y Dress Code -->
+        <section class="detalles">
+            <div class="card">
+                <i class="fas fa-gift"></i>
+                <h3>Regalos</h3>
+                <p>{{ boda.regalos.frase }}</p>
+                <p><strong>{{ boda.regalos.tipo }}</strong></p>
+            </div>
+            <div class="card">
+                <i class="fas fa-user-tie"></i>
+                <h3>Código de Vestimenta</h3>
+                <p>{{ boda.dress_code }}</p>
+            </div>
+        </section>
+
+        <!-- Galería -->
+        <section class="galeria">
+            {% for foto in boda.fotos.galeria %}
+            <img src="{{ foto }}" alt="Foto novios">
             {% endfor %}
-        </div>
-    </section>
+        </section>
 
-    <!-- Ubicación -->
-    <section class="ubicacion">
-        <h2>Ubicación</h2>
-        <div class="ubicacion-container">
-            <div class="ubicacion-item">
-                <h3><i class="fas fa-church" style="color: #DB9EF4;"></i> Ceremonia</h3>
-                <p>{{ boda.ceremonia_lugar }}</p>
-                <p>{{ boda.ceremonia_direccion }}</p>
-                <a href="{{ boda.ceremonia_url }}" target="_blank" class="btn">Ver en Mapa</a>
-            </div>
-            <div class="ubicacion-item">
-                <h3><i class="fas fa-glass-cheers" style="color: #DB9EF4;"></i> Recepción</h3>
-                <p>{{ boda.lugar }}</p>
-                <p>{{ boda.direccion }}</p>
-                <a href="{{ boda.ubicacion_url }}" target="_blank" class="btn">Ver en Mapa</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Regalos y Dress Code -->
-    <section class="detalles container">
-        <div class="card">
-            <i class="fas fa-gift"></i>
-            <h3>Regalos</h3>
-            <p>{{ boda.regalos.tipo }}</p>
-            <p class="small">{{ boda.regalos.frase }}</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-tshirt"></i>
-            <h3>Dress code</h3>
-            <p>{{ boda.dress_code }}</p>
-        </div>
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Confirmación" class="card-img">
-            <h3>Confirmación</h3>
-            <p>Te contactaremos para confirmar tu asistencia</p>
-        </div>
-    </section>
-
-    <!-- Galería -->
-    <section class="galeria">
-        {% for foto in boda.fotos.galeria %}
-        <img src="{{ foto }}" alt="Foto Boda">
-        {% endfor %}
-    </section>
-
-    <footer>
-        <p>Te esperamos para celebrar juntos.</p>
-        <p>{{ boda.novios }}</p>
-    </footer>
+        <footer>
+            <p>{{ boda.novios }} - {{ boda.fecha_anio }}</p>
+        </footer>
     </div>
 
-    {% if boda.musica %}
-    <!-- Audio de fondo -->
-    <audio id="musica-boda">
-        <source src="{{ url_for('static', filename=boda.musica) }}" type="audio/mpeg">
-    </audio>
-    
     <!-- Controles de Música -->
-    <div id="music-controls" class="music-controls" style="display: none;">
-        <button id="play-pause-btn" onclick="toggleMusic()">
-            <i class="fas fa-pause"></i>
-        </button>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1" oninput="changeVolume(this.value)">
+    <div class="music-controls hidden" id="music-controls">
+        <button id="play-pause"><i class="fas fa-play"></i></button>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
     </div>
-    {% endif %}
-    
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <audio id="bg-music" loop>
+        <source src="{{ url_for('static', filename=boda.musica) }}" type="audio/mp3">
+    </audio>
+
     <script>
-        // Variables para control de música
-        let fadeTimeout;
-        let fadeInterval;
+        // Lógica del Sobre y Animaciones
+        const envelope = document.getElementById('envelope');
+        const seal = document.getElementById('seal');
+        const actionArea = document.getElementById('action-area');
+        const overlay = document.getElementById('envelope-overlay');
+        const mainContent = document.getElementById('main-content');
+        const musicControls = document.getElementById('music-controls');
+        const audio = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-pause');
 
-        // Script simple para cuenta regresiva
-        const fechaBoda = new Date("{{ boda.fecha_iso }}");
-        const x = setInterval(function() {
-            const now = new Date();
-            const distance = fechaBoda - now;
-            
-            if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "¡Es hoy!";
-                clearInterval(x);
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-                return;
-            }
-
-            // Cálculo de meses, días, horas, minutos
-            let months = (fechaBoda.getFullYear() - now.getFullYear()) * 12 + (fechaBoda.getMonth() - now.getMonth());
-            
-            let tempDate = new Date(now);
-            tempDate.setMonth(now.getMonth() + months);
-            
-            if (tempDate > fechaBoda) {
-                months--;
-                tempDate = new Date(now);
-                tempDate.setMonth(now.getMonth() + months);
-            }
-            
-            const remaining = fechaBoda - tempDate;
-            const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-            
-            document.getElementById("countdown").innerHTML = 
-                `<div class="time-box"><span>${months}</span> Meses</div>
-                 <div class="time-box"><span>${days}</span> Días</div>
-                 <div class="time-box"><span>${hours}</span> Hs</div>
-                 <div class="time-box"><span>${minutes}</span> Min</div>`;
-        }, 1000);
-
-        // Script para abrir el sobre
-        function abrirSobre() {
-            const envelope = document.getElementById('envelope');
-            const actionArea = document.getElementById('action-area');
-            
+        seal.addEventListener('click', () => {
             envelope.classList.add('open');
-
-            // Mostrar botón después de la animación del sobre
             setTimeout(() => {
                 actionArea.classList.remove('hidden');
                 actionArea.classList.add('fade-in');
-            }, 800);
-        }
+            }, 1000);
+        });
 
-        function toggleMusic() {
-            const audio = document.getElementById('musica-boda');
-            const btn = document.getElementById('play-pause-btn');
-            const icon = btn.querySelector('i');
-            
-            // Cancelar fade-out si el usuario interactúa manualmente
-            if(fadeTimeout) clearTimeout(fadeTimeout);
-            if(fadeInterval) clearInterval(fadeInterval);
-
-            if (audio.paused) {
-                audio.play();
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause');
-            } else {
-                audio.pause();
-                icon.classList.remove('fa-pause');
-                icon.classList.add('fa-play');
-            }
-        }
-
-        function changeVolume(vol) {
-            const audio = document.getElementById('musica-boda');
-            // Cancelar fade-out si el usuario interactúa manualmente
-            if(fadeTimeout) clearTimeout(fadeTimeout);
-            if(fadeInterval) clearInterval(fadeInterval);
-            
-            audio.volume = vol;
-        }
-
-        function entrar() {
-            const overlay = document.getElementById('envelope-overlay');
-            const mainContent = document.getElementById('main-content');
-            const body = document.body;
-            const audio = document.getElementById('musica-boda');
-            const musicControls = document.getElementById('music-controls');
-
-            // Lógica de reproducción de música
-            if (audio) {
-                audio.currentTime = 20; // Empezar en el segundo 20
-                audio.volume = 1.0;
-                audio.play().catch(e => console.log("Reproducción automática bloqueada por el navegador", e));
-                
-                // Mostrar controles
-                if (musicControls) {
-                    musicControls.style.display = 'flex';
-                }
-
-                // Detener después de 1 minuto (60000 ms) con efecto fade-out
-                fadeTimeout = setTimeout(() => {
-                    fadeInterval = setInterval(() => {
-                        if (audio.volume > 0.05) {
-                            audio.volume -= 0.05;
-                            // Actualizar slider visualmente
-                            const slider = document.getElementById('volume-slider');
-                            if(slider) slider.value = audio.volume;
-                        } else {
-                            audio.pause();
-                            clearInterval(fadeInterval);
-                            // Actualizar icono a play
-                            const btn = document.getElementById('play-pause-btn');
-                            if(btn) {
-                                const icon = btn.querySelector('i');
-                                icon.classList.remove('fa-pause');
-                                icon.classList.add('fa-play');
-                            }
-                        }
-                    }, 200); // Baja el volumen cada 200ms
-                }, 60000);
-            }
-
-            overlay.classList.add('slide-up-out');
-            
+        document.getElementById('enter-btn').addEventListener('click', () => {
+            overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
+                document.body.classList.remove('locked');
                 mainContent.classList.remove('hidden-content');
                 mainContent.classList.add('fade-in-page');
-                body.classList.remove('locked');
+                musicControls.classList.remove('hidden');
+                
+                // Intentar reproducir música (los navegadores a veces bloquean esto sin interacción previa)
+                audio.play().then(() => {
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                }).catch(e => console.log("Autoplay bloqueado, usuario debe dar play manual"));
             }, 1000);
-        }
+        });
 
-        // Detener música al minimizar o cambiar de pestaña (funciona en Instagram/Facebook)
-        document.addEventListener("visibilitychange", () => {
-            const audio = document.getElementById('musica-boda');
-            if (document.hidden && audio) {
+        // Control de Música
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
                 audio.pause();
-                const btn = document.getElementById('play-pause-btn');
-                if(btn) {
-                    const icon = btn.querySelector('i');
-                    icon.classList.remove('fa-pause');
-                    icon.classList.add('fa-play');
-                }
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
             }
         });
+
+        document.getElementById('volume').addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+
+        // Cuenta Regresiva
+        const targetDate = new Date(document.getElementById('countdown').dataset.date).getTime();
+        
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = "¡Es hoy!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }, 1000);
     </script>
 </body>
 </html>
