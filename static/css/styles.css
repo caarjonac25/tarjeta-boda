@@ -34,7 +34,7 @@ body.locked { overflow: hidden; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--color-dark-gradient); /* Fondo con degradado elegante */
+    background: var(--color-background); /* Fondo gris suave para cohesión */
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -54,8 +54,8 @@ body.locked { overflow: hidden; }
     position: relative;
     width: 320px;
     height: 220px;
-    background: var(--color-primary-medium); /* Color interior del sobre */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    background: transparent; /* El fondo lo dan las piezas */
+    box-shadow: 0 15px 35px rgba(44, 62, 80, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05); /* Sombra 3D sutil */
     perspective: 1000px;
 }
 
@@ -67,7 +67,7 @@ body.locked { overflow: hidden; }
     height: 0;
     border-style: solid;
     border-width: 0 160px 120px 160px; /* Crea el triángulo inferior */
-    border-color: transparent transparent var(--color-primary-light) transparent; /* Color del frente del sobre */
+    border-color: transparent transparent var(--color-primary-medium) transparent; /* Un tono más oscuro para el frente */
     z-index: 3;
 }
 
@@ -100,7 +100,6 @@ body.locked { overflow: hidden; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .paper-content { text-align: center; }
@@ -140,7 +139,8 @@ body.locked { overflow: hidden; }
     transition: opacity 0.2s;
 }
 .envelope.open .paper {
-    transform: translateY(-80px); /* Saca la tarjeta hacia arriba */
+    transform: translateY(-30px); /* Desplazamiento reducido drásticamente para una posición más central */
+    z-index: 4; /* Eleva la tarjeta por encima del sobre y su sombra interior */
 }
 
 /* Escalar el sobre según el dispositivo */
@@ -155,9 +155,13 @@ body.locked { overflow: hidden; }
 }
 
 /* Botón de entrar */
-#action-area { margin-top: 100px; opacity: 0; transition: opacity 0.5s; }
-@media (min-width: 768px) {
-    #action-area { margin-top: 210px; }
+/* Se reduce el margen para evitar el salto brusco y acercar el botón */
+#action-area {
+    margin-top: 40px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    position: relative; /* Asegura que z-index funcione correctamente */
+    z-index: 10; /* Eleva el botón por encima del sobre, que crea su propio contexto de apilamiento */
 }
 #action-area.fade-in { opacity: 1; }
 .hidden { display: none; }
