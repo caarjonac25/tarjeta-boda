@@ -1,5 +1,5 @@
 /* --- Variables de Diseño (Tema) --- */
-:root {
+:root {reg
     --color-primary: #9BD2DC;
     --color-primary-light: #E0F7FA;
     --color-primary-medium: #B2EBF2;
@@ -444,4 +444,19 @@ footer {
     font-size: 3rem;
     color: var(--color-primary);
     margin-bottom: 20px;
+}
+
+/* Icono de RSVP */
+.rsvp-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+/* Botón de WhatsApp */
+.btn-whatsapp {
+    background-color: #25D366; /* Color oficial de WhatsApp */
+}
+.btn-whatsapp:hover {
+    background-color: #128C7E; /* Un verde más oscuro para el hover */
 }
