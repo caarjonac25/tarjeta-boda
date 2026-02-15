@@ -1,10 +1,27 @@
+/* --- Variables de Diseño (Tema) --- */
+:root {
+    --color-primary: #9BD2DC;
+    --color-primary-light: #E0F7FA;
+    --color-primary-medium: #B2EBF2;
+    --color-primary-dark: #00796B;
+    --font-body: 'Raleway', sans-serif;
+    --font-heading: 'Alex Brush', cursive;
+    --font-display: 'Great Vibes', cursive;
+    --color-text: #4a4a4a;
+    --color-text-light: #666;
+    --color-background: #f9f9f9;
+    --color-white: white;
+    --color-dark: #333;
+    --color-dark-gradient: radial-gradient(circle, #444 0%, #1a1a1a 100%);
+}
+
 body {
-    font-family: 'Raleway', sans-serif;
+    font-family: var(--font-body);
     margin: 0;
     padding: 0;
-    color: #4a4a4a;
+    color: var(--color-text);
     text-align: center;
-    background-color: #f9f9f9;
+    background-color: var(--color-background);
 }
 
 /* --- Estilos del Sobre (Envelope) --- */
@@ -16,7 +33,7 @@ body.locked { overflow: hidden; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, #444 0%, #1a1a1a 100%); /* Fondo con degradado elegante */
+    background: var(--color-dark-gradient); /* Fondo con degradado elegante */
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -36,8 +53,8 @@ body.locked { overflow: hidden; }
     position: relative;
     width: 320px;
     height: 220px;
-    background: #D7BDE2; /* Color interior del sobre (Lila Suave) */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    background: var(--color-primary-medium); /* Color interior del sobre */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     perspective: 1000px;
 }
 
@@ -49,7 +66,7 @@ body.locked { overflow: hidden; }
     height: 0;
     border-style: solid;
     border-width: 0 160px 120px 160px; /* Crea el triángulo inferior */
-    border-color: transparent transparent #EBDEF0 transparent; /* Color del frente del sobre (Lila Pálido) */
+    border-color: transparent transparent var(--color-primary-light) transparent; /* Color del frente del sobre */
     z-index: 3;
 }
 
@@ -61,7 +78,7 @@ body.locked { overflow: hidden; }
     height: 0;
     border-style: solid;
     border-width: 110px 160px 0 160px; /* Crea el triángulo superior (solapa) */
-    border-color: #EBDEF0 transparent transparent transparent; /* Color de la solapa */
+    border-color: var(--color-primary-light) transparent transparent transparent; /* Color de la solapa */
     transform-origin: top;
     transition: transform 0.6s ease, z-index 0.1s linear 0.3s;
     z-index: 5;
@@ -73,7 +90,7 @@ body.locked { overflow: hidden; }
     left: 10px;
     width: 300px;
     height: 200px;
-    background: white;
+    background: var(--color-white);
     padding: 20px;
     box-sizing: border-box;
     transition: transform 0.6s ease 0.6s;
@@ -82,12 +99,12 @@ body.locked { overflow: hidden; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .paper-content { text-align: center; }
-.paper-name { font-family: 'Great Vibes', cursive; font-size: 2rem; color: #8E44AD; margin: 5px 0; }
-.paper-text { font-size: 0.9rem; color: #666; margin: 0; }
+.paper-name { font-family: var(--font-display); font-size: 2rem; color: var(--color-primary-dark); margin: 5px 0; }
+.paper-text { font-size: 0.9rem; color: var(--color-text-light); margin: 0; }
 
 .seal {
     position: absolute;
@@ -96,16 +113,16 @@ body.locked { overflow: hidden; }
     transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
-    background: #DB9EF4; /* Lila Principal */
+    background: var(--color-primary); /* Color Principal */
     border-radius: 50%;
     z-index: 6;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-family: 'Great Vibes', cursive;
+    color: var(--color-white);
+    font-family: var(--font-display);
     font-size: 1.2rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -145,8 +162,8 @@ body.locked { overflow: hidden; }
 .hidden { display: none; }
 
 .btn-enter {
-    background: #DB9EF4;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-white);
     border: none;
     padding: 12px 30px;
     font-size: 1.1rem;
@@ -154,7 +171,7 @@ body.locked { overflow: hidden; }
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-family: 'Raleway', sans-serif;
+    font-family: var(--font-body);
 }
 
 /* Transiciones de página */
@@ -167,9 +184,21 @@ body.locked { overflow: hidden; }
     to { opacity: 1; }
 }
 
-h1, h2, h3 {
-    font-family: 'Great Vibes', cursive;
+h1 {
+    font-family: var(--font-display);
     font-weight: 400;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2.8rem;
+}
+
+h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 2.2rem;
 }
 
 .container {
@@ -186,8 +215,8 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    color: var(--color-white);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .nombres {
@@ -196,7 +225,7 @@ h1, h2, h3 {
 }
 
 .fecha-badge {
-    border: 2px solid white;
+    border: 2px solid var(--color-white);
     padding: 10px 20px;
     display: inline-block;
     margin: 20px 0;
@@ -212,8 +241,8 @@ h1, h2, h3 {
 .anio { font-size: 2rem; }
 
 /* Invitacion */
-.invitacion { padding: 60px 20px; background: white; overflow: hidden; }
-.frase { font-style: italic; color: #888; margin: 0; padding: 0 10px; line-height: 1.6; }
+.invitacion { padding: 60px 20px; background: var(--color-white); overflow: hidden; }
+.frase { font-style: italic; color: #888; margin: 0; padding: 0 10px; line-height: 1.6; } /* Color mantenido por contraste */
 
 /* Slider de Frases */
 .slider-container {
@@ -246,8 +275,8 @@ h1, h2, h3 {
 
 /* Countdown */
 .countdown-section {
-    background-color: #DB9EF4;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
     padding: 40px 20px;
 }
 #countdown { display: flex; justify-content: center; gap: 20px; }
@@ -258,16 +287,22 @@ h1, h2, h3 {
 .itinerario { padding: 60px 20px; }
 .timeline { display: flex; flex-direction: column; align-items: center; gap: 30px; }
 .evento { display: flex; align-items: center; gap: 20px; text-align: left; width: 100%; max-width: 400px; }
+.evento h3 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
 .icono { 
     width: 50px; height: 50px; 
-    background: #DB9EF4; color: white; 
+    background: var(--color-primary);
+    color: var(--color-white);
     border-radius: 50%; 
     display: flex; align-items: center; justify-content: center;
     font-size: 1.2rem;
 }
 
 /* Ubicacion */
-.ubicacion { padding: 60px 20px; background: #fff; }
+.ubicacion { padding: 60px 20px; background: var(--color-white); }
 .ubicacion-container {
     display: flex;
     flex-wrap: wrap;
@@ -280,8 +315,8 @@ h1, h2, h3 {
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background: #4a4a4a;
-    color: white;
+    background: var(--color-text);
+    color: var(--color-white);
     text-decoration: none;
     border-radius: 5px;
     margin-top: 10px;
@@ -297,13 +332,13 @@ h1, h2, h3 {
     max-width: 1000px;
 }
 .card {
-    background: white;
+    background: var(--color-white);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 250px;
 }
-.card i { font-size: 2rem; color: #DB9EF4; margin-bottom: 15px; }
+.card i { font-size: 2rem; color: var(--color-primary); margin-bottom: 15px; }
 .card-img {
     width: 100%;
     height: 120px;
@@ -311,7 +346,7 @@ h1, h2, h3 {
     border-radius: 8px;
     margin-bottom: 15px;
 }
-.small { font-size: 0.9rem; color: #666; }
+.small { font-size: 0.9rem; color: var(--color-text-light); }
 
 /* Galeria */
 .galeria { display: flex; flex-wrap: wrap; }
@@ -322,8 +357,8 @@ h1, h2, h3 {
 }
 
 footer {
-    background: #333;
-    color: white;
+    background: var(--color-dark);
+    color: var(--color-white);
     padding: 40px 20px;
     font-size: 1.3rem;
 }
@@ -353,14 +388,14 @@ footer {
     display: flex;
     align-items: center;
     gap: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(5px);
 }
 
 .music-controls button {
-    background: #DB9EF4;
+    background: var(--color-primary);
     border: none;
-    color: white;
+    color: var(--color-white);
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -402,4 +437,11 @@ footer {
 @media (max-width: 480px) {
     .img-ubicacion { width: 100%; }
     .img-dresscode { width: 80%; }
+}
+
+/* Icono de regalos */
+.regalos-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
 }
