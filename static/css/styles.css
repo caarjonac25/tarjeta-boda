@@ -1,9 +1,10 @@
 /* --- Variables de Diseño (Tema) --- */
-:root {reg
+:root {
     --color-primary: #9BD2DC;
     --color-primary-light: #E0F7FA;
     --color-primary-medium: #B2EBF2;
     --color-primary-dark: #00796B;
+    --color-accent-dark: #2C3E50; /* Azul oscuro sofisticado para contraste */
     --font-body: 'Raleway', sans-serif;
     --font-heading: 'Alex Brush', cursive;
     --font-display: 'Great Vibes', cursive;
@@ -113,7 +114,7 @@ body.locked { overflow: hidden; }
     transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
-    background: var(--color-primary); /* Color Principal */
+    background: var(--color-accent-dark); /* Color de acento oscuro para el sello */
     border-radius: 50%;
     z-index: 6;
     display: flex;
@@ -285,12 +286,43 @@ h3 {
 
 /* Itinerario */
 .itinerario { padding: 60px 20px; }
-.timeline { display: flex; flex-direction: column; align-items: center; gap: 30px; }
-.evento { display: flex; align-items: center; gap: 20px; text-align: left; width: 100%; max-width: 400px; }
-.evento h3 {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 1.2rem;
+.timeline {
+    position: relative; /* Contenedor para la línea vertical */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+        max-width: 500px; /* Ancho aumentado para el nuevo layout */
+    margin: 0 auto;
+    padding: 20px 0; /* Espacio para que la línea se vea arriba y abajo */
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+        left: 50%; /* Centra la línea en el contenedor */
+        transform: translateX(-50%); /* Ajuste para centrar la línea de 5px */
+    top: 0;
+    bottom: 0;
+        width: 5px; /* Grosor aumentado (+2) */
+    background-color: var(--color-primary-light);
+    z-index: 1; /* Detrás del contenido del evento */
+}
+.evento {
+    position: relative; /* Necesario para que z-index funcione */
+    z-index: 2; /* Asegura que el contenido esté por encima de la línea */
+        display: grid;
+        grid-template-columns: 1fr auto 1fr; /* hora | icono | actividad */
+        align-items: center;
+        gap: 20px;
+}
+    .evento-hora {
+        font-family: var(--font-body);
+        font-size: 1.2rem;
+        margin: 0;
+        text-align: right;
+}
+    .evento-actividad {
+    margin: 0;
+        text-align: left;
 }
 .icono { 
     width: 50px; height: 50px; 
@@ -299,6 +331,8 @@ h3 {
     border-radius: 50%; 
     display: flex; align-items: center; justify-content: center;
     font-size: 1.2rem;
+        border: 3px solid var(--color-background);
+        box-sizing: border-box;
 }
 
 /* Ubicacion */

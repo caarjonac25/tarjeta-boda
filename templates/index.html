@@ -91,11 +91,9 @@
             <div class="timeline">
                 {% for item in boda.itinerario %}
                 <div class="evento">
+                    <h3 class="evento-hora">{{ item.hora }}</h3>
                     <div class="icono"><i class="{{ item.icono }}"></i></div>
-                    <div class="info">
-                        <h3>{{ item.hora }}</h3>
-                        <p>{{ item.actividad }}</p>
-                    </div>
+                    <p class="evento-actividad">{{ item.actividad }}</p>
                 </div>
                 {% endfor %}
             </div>
@@ -131,7 +129,8 @@
                 <img src="{{ url_for('static', filename=boda.dress_code_foto) }}" alt="Dress Code"
                     class="img-dresscode">
                 <h2>Código de Vestimenta</h2>
-                <p>{{ boda.dress_code }}</p>
+                <p><strong>Caballeros:</strong> {{ boda.dress_code.caballeros }}</p>
+                <p><strong>Damas:</strong> {{ boda.dress_code.damas }}</p>
             </div>
         </section>
 

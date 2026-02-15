@@ -20,17 +20,24 @@
         "Andar juntos por la vida es el mejor viaje que podemos emprender."
     ],
     "itinerario": [
-        {"hora": "4:00 PM", "actividad": "Ceremonia Religiosa", "icono": "fas fa-church"},
-        {"hora": "5:30 PM", "actividad": "Cóctel de Bienvenida", "icono": "fas fa-glass-cheers"},
-        {"hora": "6:30 PM", "actividad": "Recepción y Cena", "icono": "fas fa-utensils"},
-        {"hora": "8:00 PM", "actividad": "Fiesta", "icono": "fas fa-music"}
+        {"hora": "2:30 PM", "actividad": "Llegada de los invitados", "icono": "fas fa-users"},
+        {"hora": "3:00 PM", "actividad": "Ceremonia Católica", "icono": "fas fa-church"},
+        {"hora": "5:45 PM", "actividad": "Coctel", "icono": "fas fa-glass-cheers"},
+        {"hora": "6:20 PM", "actividad": "Fotografía social", "icono": "fas fa-camera-retro"},
+        {"hora": "7:00 PM", "actividad": "Cena", "icono": "fas fa-utensils"},
+        {"hora": "8:30 PM", "actividad": "Baile Novios", "icono": "fas fa-heart"},
+        {"hora": "9:00 PM", "actividad": "Disfruta la Fiesta", "icono": "fas fa-music"},
+        {"hora": "2:00 AM", "actividad": "The End", "icono": "fas fa-moon"}
     ],
     "regalos": {
         "frase": "Tu presencia es nuestro mejor regalo, pero si deseas tener un detalle con nosotros, agradecemos tu aporte en sobre.",
         "tipo": "Lluvia de Sobres"
     },
     "musica": "music/cancion1.mp3",
-    "dress_code": "Formal / Casual",
+    "dress_code": {
+        "caballeros": "Traje Formal sin corbata.",
+        "damas": "Vestido largo unicolor (se reserva el color blanco y tonos nude en todas sus gamas)."
+    },
     "dress_code_foto": "img/dresscode.jpeg",
     "fotos": {
         "portada": "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
