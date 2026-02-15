@@ -35,7 +35,7 @@
     },
     "musica": "music/cancion1.mp3",
     "dress_code": {
-        "caballeros": "Traje Formal sin corbata.",
+        "caballeros": "Traje formal sin corbata.",
         "damas": "Vestido largo unicolor (se reserva el color blanco y tonos nude en todas sus gamas)."
     },
     "dress_code_foto": "img/dresscode.jpeg",
