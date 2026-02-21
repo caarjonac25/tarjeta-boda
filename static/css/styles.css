@@ -14,6 +14,11 @@
     --color-white: white;
     --color-dark: #333;
     --color-dark-gradient: radial-gradient(circle, #444 0%, #1a1a1a 100%);
+
+    /* --- Variables de Swiper --- */
+    --swiper-theme-color: var(--color-primary);
+    --swiper-navigation-color: var(--color-white);
+    --swiper-pagination-bullet-inactive-color: rgba(0,0,0,0.2);
 }
 
 body {
@@ -386,12 +391,51 @@ h3 {
 }
 .small { font-size: 0.9rem; color: var(--color-text-light); }
 
-/* Galeria */
-.galeria { display: flex; flex-wrap: wrap; }
-.galeria img {
-    width: 33.33%;
-    height: 300px;
+/* Galería Carrusel (Swiper) */
+.galeria-carrusel {
+    padding: 60px 0;
+    background-color: var(--color-white);
+}
+
+.swiper {
+    width: 100%;
+    /* Se establece una altura fija para todo el carrusel, creando el efecto "cinta" */
+    height: 400px;
+    margin: 20px 0 0;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: var(--color-white); /* Fondo blanco */
+    overflow: hidden; /* Evita cualquier desbordamiento de la imagen */
+}
+
+/* Estilos para la imagen dentro del slide */
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Rellena el espacio, recortando si es necesario para mantener la proporción. Esto crea la "cinta" perfecta. */
     object-fit: cover;
+}
+
+/* Estilos personalizados para la navegación de Swiper */
+.swiper-button-next,
+.swiper-button-prev {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    transition: background-color 0.3s ease;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 1.5rem !important;
 }
 
 footer {
@@ -403,14 +447,20 @@ footer {
 
 @media (max-width: 768px) {
     .nombres { font-size: 3rem; }
-    .galeria img { width: 50%; }
+    /* La altura del swiper ahora es automática */
 }
 @media (max-width: 480px) {
-    .galeria img { width: 100%; }
     .music-controls {
         bottom: 10px;
         right: 10px;
         padding: 8px 12px;
+    }
+    .swiper { /* Se ajusta la altura del carrusel para móviles */
+        /* Altura reducida para móviles */
+        height: 350px;
+    }
+    .swiper-button-next, .swiper-button-prev {
+        display: none; /* Ocultar flechas en móviles, la paginación es suficiente */
     }
 }
 

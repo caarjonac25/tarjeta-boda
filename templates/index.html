@@ -12,6 +12,8 @@
         rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body class="locked">
@@ -44,7 +46,7 @@
     <div id="main-content" class="hidden-content">
         <!-- Hero -->
         <header class="hero"
-            style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ boda.fotos.portada }}');">
+            style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ url_for('static', filename=boda.fotos.portada) }}');">
             <div class="container">
                 <p>¡Nos Casamos!</p>
                 <h1 class="nombres">{{ boda.novios }}</h1>
@@ -155,11 +157,24 @@
             </div>
         </section>
 
-        <!-- Galería -->
-        <section class="galeria">
-            {% for foto in boda.fotos.galeria %}
-            <img src="{{ foto }}" alt="Foto novios">
-            {% endfor %}
+        <!-- Galería con Carrusel -->
+        <section class="galeria-carrusel">
+            <h2>Galería</h2>
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    {% for foto in boda.fotos.galeria %}
+                    <div class="swiper-slide">
+                        <img src="{{ url_for('static', filename=foto) }}" alt="Foto novios">
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
         </section>
 
         <footer>
@@ -176,6 +191,9 @@
     <audio id="bg-music" loop>
         <source src="{{ url_for('static', filename=boda.musica) }}" type="audio/mp3">
     </audio>
+
+    <!-- Swiper's JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
         // Lógica del Sobre y Animaciones
@@ -212,6 +230,32 @@
                     isMusicPlaying = true;
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 }).catch(e => console.log("Autoplay bloqueado, usuario debe dar play manual"));
+
+                // Inicializar Swiper AHORA que el contenido es visible para que el autoplay funcione
+                var swiper = new Swiper(".mySwiper", {
+                    slidesPerView: 1, // 1 foto en móviles
+                    spaceBetween: 20, // Espacio entre fotos
+                    loop: true,
+                    grabCursor: true,
+                    autoplay: {
+                        delay: 4000,
+                        disableOnInteraction: false,
+                    },
+                    breakpoints: {
+                        768: {
+                            slidesPerView: 3,
+                            spaceBetween: 10
+                        }
+                    },
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                });
             }, 1000);
         });
 
@@ -263,6 +307,7 @@
             document.getElementById('minutes').innerText = minutes;
             document.getElementById('seconds').innerText = seconds;
         }, 1000);
+
     </script>
 </body>
 

@@ -8,6 +8,14 @@ app = Flask(__name__)
 with open('boda_data.json', 'r', encoding='utf-8') as f:
     DATOS_BODA = json.load(f)
 
+# Cargar dinámicamente las fotos de la galería
+galeria_path_fs = os.path.join('static', 'img', 'galeria')
+if os.path.exists(galeria_path_fs):
+    # Construye la lista de rutas relativas para la URL, ordenadas alfabéticamente
+    # Se usa .replace para asegurar compatibilidad de rutas entre Windows y Unix
+    fotos_galeria = [os.path.join('img/galeria', file).replace("\\", "/") for file in sorted(os.listdir(galeria_path_fs))]
+    DATOS_BODA['fotos']['galeria'] = fotos_galeria
+
 @app.route('/')
 def home():
     # Capturar parámetros de la URL (ej: ?n=2 pases&m=Familia Perez)
