@@ -22,7 +22,7 @@
     "itinerario": [
         {"hora": "2:30 PM", "actividad": "Llegada de los invitados", "icono": "fas fa-users"},
         {"hora": "3:00 PM", "actividad": "Ceremonia Católica", "icono": "fas fa-church"},
-        {"hora": "5:45 PM", "actividad": "Coctel", "icono": "fas fa-glass-cheers"},
+        {"hora": "4:45 PM", "actividad": "Coctel", "icono": "fas fa-glass-cheers"},
         {"hora": "6:20 PM", "actividad": "Fotografía social", "icono": "fas fa-camera-retro"},
         {"hora": "7:00 PM", "actividad": "Cena", "icono": "fas fa-utensils"},
         {"hora": "8:30 PM", "actividad": "Baile Novios", "icono": "fas fa-heart"},
@@ -35,7 +35,7 @@
     },
     "musica": "music/cancion1.mp3",
     "dress_code": {
-        "caballeros": "Traje formal sin corbata.",
+        "caballeros": "Traje formal sin corbata (se reserva el vestido de lino color beige).",
         "damas": "Vestido largo unicolor (se reserva el color blanco y tonos nude en todas sus gamas)."
     },
     "dress_code_foto": "img/dresscode.jpeg",
